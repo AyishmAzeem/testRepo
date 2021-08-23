@@ -5,23 +5,28 @@ import {
   Text,
   View,
 } from 'react-native';
-
-
-const App=()=> {
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import SignUp from './screens/signUp'
+import data from './store/reducers/data'
+import AppNavigator from './Navigator/appNavigator'
+const rootReducer=combineReducers({
+  loginInfo:data
+})
+const store=createStore(rootReducer)
+export default function App() {
 return(
-  <View style={styles.container}>
-    <Text>Heyy Ayishm</Text>
-  </View>
+<Provider store={store}>
+<AppNavigator/>
+</Provider>
 )
 }
 
-export default App;
+
 const styles=StyleSheet.create({
   container:
   {
     flex:1,
-    backgroundColor:"white",
-    justifyContent:"center",
-    alignItems:"center"
+
   }
 })
