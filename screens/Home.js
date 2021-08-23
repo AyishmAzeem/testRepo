@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   View,
-  Dimensions,
-  Alert,
-  TouchableOpacity,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import * as accountAction from '../store/actions/account'
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-import Input from '../components/input';
-import Button from '../components/Button';
-import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
-import { combineReducers } from 'redux';
+import {useSelector } from 'react-redux';
+
 
 const Home=(props)=> {
     const accountInfo=useSelector(state=>state.loginInfo.loginAccount)
@@ -37,5 +28,4 @@ const styles=StyleSheet.create({
     alignItems:"center",
  
   },
-
 })

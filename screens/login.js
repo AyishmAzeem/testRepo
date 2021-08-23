@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState,useLayoutEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   View,
   Dimensions,
-  Alert,
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,12 +13,9 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import Input from '../components/input';
 import Button from '../components/Button';
-import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
-import { combineReducers } from 'redux';
+
 
 const Login=(props)=> {
-    const account=useSelector(state=>state.loginInfo.availableAccounts)
-    
     const dispatch=useDispatch()
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
@@ -28,43 +24,49 @@ const Login=(props)=> {
     console.log(loginBool,"boooll")
     const submitHandler=()=>{
         if(email!=""&&password!=""){
-         
             console.log(loginBool,"looo")
             dispatch(accountAction.loginAccount(email,password))
-           
             setPassword('')
             setEmail('')
             setMissingValue(false)
-          
         } 
         else{
         setMissingValue(true)    
         }
         
     }
-useEffect(()=>{
-    loginBool===true?props.navigation.navigate("Home"):console.log("checkkk valll")
-},[loginBool])
-console.log(account,"yayyayyy")
+ useLayoutEffect(() => {
+  loginBool===true?props.navigation.navigate("Home"):console.log("checkkk valll")
+    })
     return(
   <ScrollView contentContainerStyle={styles.container}>
       <View style={{flex:0.96,justifyContent:"center",alignItems:"center"}}>
-    {/* <Text>Heyy developer</Text> */}
+    <Text style={{fontSize:20,color:"#406973"}}>Welcome!</Text>
     <Input label={"Email"} 
     onChangeText={(text)=>{setEmail(text)}} 
     placeholder="Your Email" 
     value={email} 
+    placeholderTextColor="gray" 
     maxLength={30} 
     missingValue={missingValue}
     />
-    <Input label={"Password"} onChangeText={(text)=>{setPassword(text)}} placeholder="Password" value={password} maxLength={8} missingValue={missingValue}/>
+    <Input 
+    label={"Password"} 
+    onChangeText={(text)=>{setPassword(text)}} 
+    placeholder="Password"
+    placeholderTextColor="gray" 
+    secureTextEntry={true} 
+    value={password} 
+    maxLength={8} 
+    missingValue={missingValue}
+    />
     <View style={styles.buttonView}>
     <Button 
     label={"SignIn"}
     onPress={()=>{submitHandler()}}/>
     </View>
     </View>
-    <View style={{flexDirection:"row",flex:0.04,alignItems:"center",justifyContent:"center",paddingBottom:windowHeight*0.03}}>
+    <View style={styles.bottomView}>
     <Text>Don't have an account?</Text>
     <TouchableOpacity onPress={()=>{props.navigation.navigate('SignUp')}}>
         <Text style={{color:"#406973",fontSize:14}}>{" SignUp"}</Text>
@@ -75,6 +77,11 @@ console.log(account,"yayyayyy")
 }
 
 export default Login;
+Login.navigationOptions=()=>{
+  return{
+    headerShown: false
+  }
+}
 const styles=StyleSheet.create({
   container:
   {
@@ -89,5 +96,12 @@ const styles=StyleSheet.create({
     alignItems:"center",
     height:windowHeight*0.07,
     marginTop:windowHeight*0.09
+  },
+  bottomView:{
+    flexDirection:"row",
+    flex:0.04,
+    alignItems:"center",
+    justifyContent:"center",
+    paddingBottom:windowHeight*0.03
   }
 })

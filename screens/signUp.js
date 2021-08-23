@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-AsyncStorage,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,7 +15,8 @@ const windowHeight = Dimensions.get('window').height;
 import Input from '../components/input';
 import Button from '../components/Button';
 
-const signUp=()=> {
+
+const signUp=(props)=> {
     const account=useSelector(state=>state.loginInfo.availableAccounts)
     const dispatch=useDispatch()
     const [name,setName]=useState('')
@@ -29,7 +29,17 @@ const signUp=()=> {
         if(name!=""&&email!="",password!=""&&confirmPassword!=""){
             if(password===confirmPassword){
             dispatch(accountAction.createAccount(name,email,password,confirmPassword))
-            Alert.alert("","Account created successfully")
+            Alert.alert(
+              "",
+              "Account Created Successfully!",
+              [
+                {
+                  text: "Ok",
+                  onPress: () =>props.navigation.navigate('Login'),
+                  style: "cancel" 
+                }
+              ]
+            );
             setName('')
             setPassword('')
             setEmail('')
@@ -41,12 +51,9 @@ const signUp=()=> {
             }
         } 
         else{
-        console.log("yay")
         setMissingValue(true)    
         }
     }
-
-console.log(account,"yayyayyy")
     return(
   <ScrollView contentContainerStyle={styles.container}>
     <Text>Welcome</Text>
@@ -65,7 +72,9 @@ console.log(account,"yayyayyy")
 
 export default signUp;
 signUp.navigationOptions=()=>{
-    return null
+  return{
+      headerShown: false
+    }
 }
 const styles=StyleSheet.create({
   container:
@@ -74,7 +83,7 @@ const styles=StyleSheet.create({
     backgroundColor:"white",
     justifyContent:"center",
     alignItems:"center",
-   paddingVertical:windowHeight*0.02
+    paddingVertical:windowHeight*0.02
   },
   buttonView:{
     width:windowWidth*0.90,

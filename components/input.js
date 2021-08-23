@@ -2,14 +2,14 @@ import React from 'react'
 import { TextInput,View,StyleSheet,Dimensions,Text } from 'react-native'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-console.log(windowWidth,"window width",windowHeight)
+// console.log(windowWidth,"window width",windowHeight)
 
 const Input=(props)=>{
     return(
         <View style={{width:windowWidth*0.90}}>
             <Text style={styles.label}>{props.label}</Text>
             <View style={styles.input}>
-                <TextInput {...props} value={props.value} style={{paddingHorizontal:windowWidth*0.03,paddingVertical:windowWidth*0.02}}/>
+                <TextInput {...props} value={props.value}  placeholderTextColor="gray"  style={{paddingHorizontal:windowWidth*0.03,paddingVertical:windowWidth*0.02,color:"black"}}/>
             </View>
             {props.missingValue&&props.value==""?<Text style={{color:"red",fontSize:10}}>* Required</Text>:null}
         </View>
