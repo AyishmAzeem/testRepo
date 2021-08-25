@@ -1,0 +1,10 @@
+export const BASE_URL = "";
+export const COLOR_BLUE = "#406973";
+export const COLOR_DARK_ORANGE = "#F05423";
+export const COLOR_GREEN = "#a9d18e";
+export const COLOR_CHECK = '#f4b183'
+export const COLOR_PURPLE = "#603493";
+export const COLOR_GREY = "#676767";
+export const HEADER_TEXT_COLOR = '#bcc3d5';
+export const PLACEHOLDER_COLOR = "gray";
+export const COLOR_BLACK = "black";

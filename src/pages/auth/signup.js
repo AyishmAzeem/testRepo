@@ -1,23 +1,20 @@
+
 import React, { useState } from 'react';
 import {
   ScrollView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  Dimensions,
   Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import * as accountAction from '../store/actions/account'
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-import Input from '../components/input';
-import Button from '../components/Button';
-
+import * as util from '../../utilities/index'
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import styles from '../../styles/index';
+import * as TASKS from '../../store/actions/index';
 
 const signUp=(props)=> {
-    const account=useSelector(state=>state.loginInfo.availableAccounts)
+    // const account=useSelector(state=>state.loginInfo.availableAccounts)
     const dispatch=useDispatch()
     const [name,setName]=useState('')
     const [email,setEmail]=useState('')
@@ -28,14 +25,14 @@ const signUp=(props)=> {
     const submitHandler=()=>{
         if(name!=""&&email!="",password!=""&&confirmPassword!=""){
             if(password===confirmPassword){
-            dispatch(accountAction.createAccount(name,email,password,confirmPassword))
+         dispatch(TASKS.signUp({email:email,password:password,name:name,password:password,confirmPassword:confirmPassword}))
             Alert.alert(
               "",
               "Account Created Successfully!",
               [
                 {
                   text: "Ok",
-                  onPress: () =>props.navigation.navigate('Login'),
+                  onPress: () =>util.navigate("login"),
                   style: "cancel" 
                 }
               ]
@@ -55,13 +52,13 @@ const signUp=(props)=> {
         }
     }
     return(
-  <ScrollView contentContainerStyle={styles.container}>
+  <ScrollView contentContainerStyle={styles.auth.parentViewStyle}>
     <Text>Welcome</Text>
     <Input label={"Full Name"} onChangeText={(text)=>{setName(text)}} value={name} maxLength={15} placeholder="Your Name" missingValue={missingValue}/>
     <Input label={"Email"} onChangeText={(text)=>{setEmail(text)}} placeholder="Your Email" value={email} maxLength={30} missingValue={missingValue}/>
     <Input label={"Password"} onChangeText={(text)=>{setPassword(text)}} placeholder="Password" value={password} maxLength={8} missingValue={missingValue}/>
     <Input label={"Confirm Password"} onChangeText={(text)=>{setConfirmPassword(text)}} placeholder="Re-enter Password" value={confirmPassword} maxLength={8} missingValue={missingValue}/>
-    <View style={styles.buttonView}>
+    <View style={styles.auth.buttonView}>
     <Button 
     label={"Sign Up"}
     onPress={()=>{submitHandler()}}/>
@@ -76,19 +73,4 @@ signUp.navigationOptions=()=>{
       headerShown: false
     }
 }
-const styles=StyleSheet.create({
-  container:
-  {
-    flexGrow:1,
-    backgroundColor:"white",
-    justifyContent:"center",
-    alignItems:"center",
-    paddingVertical:windowHeight*0.02
-  },
-  buttonView:{
-    width:windowWidth*0.90,
-    alignItems:"center",
-    height:windowHeight*0.07,
-    marginTop:windowHeight*0.09
-  }
-})
+
